@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import axios from "axios";
 
 const Homepage = () => {
@@ -39,10 +40,10 @@ const Homepage = () => {
                 console.log(track);
                 return (
                   <div className="col-md-4" key={track.track_id}>
-                    <a href={`/track/${track.track_id}`} className="box-content">
+                    <Link to={`/lyric/${track.track_id}`} className="box-content">
                       <h5>{track.track_name}</h5>
                       <p className="subtitle">{track.artist_name}</p>
-                    </a>
+                    </Link>
                   </div>
                 );
               })}
