@@ -6,7 +6,7 @@ const Homepage = () => {
   useEffect(() => {
     async function fetchPopularLyrics() {
       const API_KEY = "adb4320356ef8660531c9ebcb8b0269e";
-      const URL_API = `https://cors-anywhere.herokuapp.com/http://api.musixmatch.com/ws/1.1/chart.tracks.get?page=1&page_size=10&country=id&f_has_lyrics=1&apikey=${API_KEY}`;
+      const URL_API = `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/chart.tracks.get?page=1&page_size=10&country=id&f_has_lyrics=1&apikey=${API_KEY}`;
 
       const result = await axios(URL_API);
       const { track_list } = result.data.message.body;
@@ -16,14 +16,40 @@ const Homepage = () => {
     fetchPopularLyrics();
   }, []);
 
-  // Mapping data
-  data.map((track, index) => console.log(track.track))
-
   return (
     <div>
       <header className="header-wrapper">
-        <h1>Cari lirik lagu popular di indonesia</h1>
+        <div className="container">
+          <div className="col-md-8">
+            <h1>Cari lirik lagu popular</h1>
+            <input placeholder="Masukan judul lagu" className="search-style" />
+          </div>
+        </div>
       </header>
+      {/* Content */}
+      <div className="container">
+        <div className="content">
+          <div>
+            <h3>Lagu terpopuler indonesia</h3>
+          </div>
+          <div>
+            <div className="row">
+              {data.map((tracks, index) => {
+                const { track } = tracks;
+                console.log(track);
+                return (
+                  <div className="col-md-4" key={track.track_id}>
+                    <a href={`/track/${track.track_id}`} className="box-content">
+                      <h5>{track.track_name}</h5>
+                      <p className="subtitle">{track.artist_name}</p>
+                    </a>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

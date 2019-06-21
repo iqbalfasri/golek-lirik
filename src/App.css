@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Heebo:300,400,700&display=swap');
-
+@import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
+@import url("https://fonts.googleapis.com/css?family=Heebo:300,400,700&display=swap");
 
 * {
   padding: 0;
   margin: 0;
-  font-family: 'Heebo', sans-serif !important;
+  font-family: "Heebo", sans-serif !important;
 }
 
 .App {
@@ -34,7 +34,6 @@
 
 .header-wrapper {
   min-height: 500px;
-  padding: 0px 200px;
   box-sizing: border-box;
   background-color: #f5f7fa;
 
@@ -42,9 +41,49 @@
   flex-direction: column;
   justify-content: center;
 }
-.header-wrapper > h1 {
+.header-wrapper h1 {
   color: #2c3e50;
   font-size: 42px;
   font-weight: 700;
-  margin-bottom: 30px;
+}
+.header-wrapper .search-style {
+  padding: 20px 30px;
+  margin-top: 25px;
+  width: 100%;
+  position: relative;
+  border-radius: 5px;
+  display: inline-block;
+  border: 1px solid #e7e7e7;
+  outline: none;
+  font-size: 18px;
+}
+.header-wrapper .search-style:focus {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+/*
+* Content style
+*/
+.content {
+  margin: 50px 0;
+}
+.content h3 {
+  font-size: 28px;
+  font-weight: 700;
+}
+.content .box-content {
+  background-color: white;
+  margin-bottom: 50px;
+  box-sizing: border-box;
+  padding: 0 20px;
+  max-height: 250px;
+  min-height: 200px;
+
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 7px rgba(0,0,0,.1);
+}
+.content .subtitle {
+  font-size: 14px;
+  color: #282c34;
 }
