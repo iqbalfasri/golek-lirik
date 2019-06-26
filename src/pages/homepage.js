@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Card, Row, Col } from "antd";
+import { Link } from "react-router-dom";
 import axios from "axios";
+import { handleCorsRequest } from "../lib";
 
 const Homepage = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     async function fetchPopularLyrics() {
       const API_KEY = "adb4320356ef8660531c9ebcb8b0269e";
-      const URL_API = `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/chart.tracks.get?page=1&page_size=10&country=id&f_has_lyrics=1&apikey=${API_KEY}`;
+      const URL_API = handleCorsRequest(
+        `https://api.musixmatch.com/ws/1.1/chart.tracks.get?page=1&page_size=10&country=id&f_has_lyrics=1&apikey=${API_KEY}`
+      );
 
       const result = await axios(URL_API);
       const { track_list } = result.data.message.body;
@@ -16,6 +20,8 @@ const Homepage = () => {
 
     fetchPopularLyrics();
   }, []);
+
+  const { Meta } = Card;
 
   return (
     <div>
@@ -34,20 +40,28 @@ const Homepage = () => {
             <h3>Lagu terpopuler indonesia</h3>
           </div>
           <div>
-            <div className="row">
+            <Row gutter={16}>
               {data.map((tracks, index) => {
                 const { track } = tracks;
                 console.log(track);
                 return (
-                  <div className="col-md-4" key={track.track_id}>
-                    <Link to={`/lyric/${track.track_id}`} className="box-content">
-                      <h5>{track.track_name}</h5>
-                      <p className="subtitle">{track.artist_name}</p>
+                  <Col key={track.track_id} md={8}>
+                    <Link className="track-link" to={`/lyric/${track.track_id}`}>
+                      <Card className="box-content">
+                        <Meta
+                          title={
+                            <h5 style={{ fontWeight: "bold" }}>
+                              {track.track_name}
+                            </h5>
+                          }
+                          description={track.artist_name}
+                        />
+                      </Card>
                     </Link>
-                  </div>
+                  </Col>
                 );
               })}
-            </div>
+            </Row>
           </div>
         </div>
       </div>

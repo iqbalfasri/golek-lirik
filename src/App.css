@@ -1,3 +1,5 @@
+@import '~antd/dist/antd.css';
+
 @import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
 @import url("https://fonts.googleapis.com/css?family=Heebo:300,400,700&display=swap");
 
@@ -46,7 +48,7 @@
   font-size: 42px;
   font-weight: 700;
 }
-.header-wrapper .search-style {
+.search-style {
   padding: 20px 30px;
   margin-top: 25px;
   width: 100%;
@@ -71,16 +73,17 @@
   font-size: 28px;
   font-weight: 700;
 }
+.content .track-link {
+  text-decoration: none;
+}
+.content .track-link:hover .box-content{
+  transform: translateY(-3px)
+}
 .content .box-content {
+  border-radius: 3px;
   background-color: white;
   margin-bottom: 50px;
   box-sizing: border-box;
-  padding: 0 20px;
-  max-height: 250px;
-  min-height: 200px;
-
-  display: flex;
-  flex-direction: column;
   box-shadow: 0 2px 7px rgba(0,0,0,.1);
 }
 .content .subtitle {
