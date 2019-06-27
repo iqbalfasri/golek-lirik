@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Card, Row, Col } from "antd";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import { handleCorsRequest } from "../lib";
 
+// Import Component
+import LyricCard from "../components/lyric-card";
+
 const Homepage = () => {
   const [data, setData] = useState([]);
+  const [pageSize, setPageSize] = useState(10);
+
   useEffect(() => {
     async function fetchPopularLyrics() {
       const API_KEY = "adb4320356ef8660531c9ebcb8b0269e";
       const URL_API = handleCorsRequest(
-        `https://api.musixmatch.com/ws/1.1/chart.tracks.get?page=1&page_size=10&country=id&f_has_lyrics=1&apikey=${API_KEY}`
+        `https://api.musixmatch.com/ws/1.1/chart.tracks.get?page=1&page_size=${pageSize}&country=id&f_has_lyrics=1&apikey=${API_KEY}`
       );
 
       const result = await axios(URL_API);
@@ -19,9 +23,15 @@ const Homepage = () => {
     }
 
     fetchPopularLyrics();
-  }, []);
+  }, [pageSize]);
 
-  const { Meta } = Card;
+  const handleLoadMore = e => {
+    e.preventDefault();
+    setPageSize(pageSize + 10);
+
+    // save to localstorage
+    localStorage.setItem("page_size_top_track_ID", pageSize);
+  };
 
   return (
     <div>
@@ -33,36 +43,24 @@ const Homepage = () => {
           </div>
         </div>
       </header>
-      {/* Content */}
       <div className="container">
+        {/* Content */}
         <div className="content">
           <div>
             <h3>Lagu terpopuler indonesia</h3>
           </div>
-          <div>
+          <div className="card-content">
             <Row gutter={16}>
-              {data.map((tracks, index) => {
-                const { track } = tracks;
-                console.log(track);
-                return (
-                  <Col key={track.track_id} md={8}>
-                    <Link className="track-link" to={`/lyric/${track.track_id}`}>
-                      <Card className="box-content">
-                        <Meta
-                          title={
-                            <h5 style={{ fontWeight: "bold" }}>
-                              {track.track_name}
-                            </h5>
-                          }
-                          description={track.artist_name}
-                        />
-                      </Card>
-                    </Link>
-                  </Col>
-                );
-              })}
+              <LyricCard tracks={data} />
             </Row>
           </div>
+          <button onClick={handleLoadMore}>Load more</button>
+        </div>
+        {/* Footer */}
+        <div>
+          <center>
+            <h3>Footer disini</h3>
+          </center>
         </div>
       </div>
     </div>

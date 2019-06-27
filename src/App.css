@@ -77,7 +77,8 @@
   text-decoration: none;
 }
 .content .track-link:hover .box-content{
-  transform: translateY(-3px)
+  transform: translateY(-3px);
+  box-shadow: 0 2px 17px rgba(0,0,0,.1);
 }
 .content .box-content {
   border-radius: 3px;
@@ -89,4 +90,8 @@
 .content .subtitle {
   font-size: 14px;
   color: #282c34;
+}
+
+.card-content {
+  margin: 50px 0;
 }
