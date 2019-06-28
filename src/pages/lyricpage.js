@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { handleCorsRequest } from "../lib";
+import { handleCorsRequest, API_SERVICES } from "../lib";
+
+// const { KEY, GET_DETAIL_TRACK, GET_DETAIL_LYRIC } = API_SERVICES;
+
+import LyricService from "../services/lyric.service";
 
 const Lyricpage = props => {
   const { track_id } = props.match.params;
@@ -9,26 +13,16 @@ const Lyricpage = props => {
   const [trackNotFound, setTrackNotFound] = useState(false);
 
   useEffect(() => {
-    async function fetchLyric() {
-      const API_KEY = "adb4320356ef8660531c9ebcb8b0269e";
-      const URL_API = handleCorsRequest(
-        `http://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=${track_id}&apikey=${API_KEY}`
-      );
-
-      try {
-        const result = await axios(URL_API);
-        const { lyrics_body } = await result.data.message.body.lyrics;
-        setLyric(lyrics_body);
-      } catch (error) {
-        setTrackNotFound(true);
-      }
-    }
+    LyricService(track_id)
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
 
     async function fetchDetailTrack() {
-      const API_KEY = "adb4320356ef8660531c9ebcb8b0269e";
-      const URL_API = handleCorsRequest(
-        `http://api.musixmatch.com/ws/1.1/track.get?track_id=${track_id}&apikey=${API_KEY}`
-      );
+      const URL_API = handleCorsRequest(GET_DETAIL_TRACK(track_id, KEY));
 
       try {
         const result = await axios(URL_API);
@@ -39,7 +33,7 @@ const Lyricpage = props => {
       }
     }
 
-    fetchLyric();
+    // fetchLyric();
     fetchDetailTrack();
   });
 

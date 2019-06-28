@@ -1,28 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { Card, Row, Col } from "antd";
+import React, { useState, useEffect, useReducer } from "react";
+import { Row } from "antd";
 import axios from "axios";
-import { handleCorsRequest } from "../lib";
+import { handleCorsRequest, API_SERVICES } from "../lib";
 
 // Import Component
 import LyricCard from "../components/lyric-card";
 
+// instance API_SERVICES
+// const { GET_CHART_TRACK, KEY } = API_SERVICES;
+
+//
+import ChartTrackService from "../services/chart-track.service";
+
 const Homepage = () => {
   const [data, setData] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
   const [pageSize, setPageSize] = useState(10);
 
   useEffect(() => {
-    async function fetchPopularLyrics() {
-      const API_KEY = "adb4320356ef8660531c9ebcb8b0269e";
-      const URL_API = handleCorsRequest(
-        `https://api.musixmatch.com/ws/1.1/chart.tracks.get?page=1&page_size=${pageSize}&country=id&f_has_lyrics=1&apikey=${API_KEY}`
-      );
-
-      const result = await axios(URL_API);
-      const { track_list } = result.data.message.body;
-      setData(track_list);
-    }
-
-    fetchPopularLyrics();
+    ChartTrackService(pageSize)
+      .then(data => {
+        setData(data);
+      })
+      .catch(error => {
+        setErrorMessage(error);
+      });
   }, [pageSize]);
 
   const handleLoadMore = e => {
@@ -39,6 +41,11 @@ const Homepage = () => {
         <div className="container">
           <div className="col-md-8">
             <h1>Cari lirik lagu popular</h1>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+              sollicitudin dapibus ligula, quis volutpat tellus gravida at. Ut
+              in lacinia nulla.
+            </p>
             <input placeholder="Masukan judul lagu" className="search-style" />
           </div>
         </div>
@@ -59,7 +66,7 @@ const Homepage = () => {
         {/* Footer */}
         <div>
           <center>
-            <h3>Footer disini</h3>
+            <p>Copyright 2019 &copy;</p>
           </center>
         </div>
       </div>
