@@ -36,7 +36,7 @@ const Lyricpage = props => {
 
     // fetchLyric();
     fetchDetailTrack();
-  });
+  }, [lyric]);
 
   return (
     <React.Fragment>

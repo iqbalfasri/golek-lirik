@@ -100,6 +100,8 @@
   margin-bottom: 50px;
   box-sizing: border-box;
   box-shadow: 0 2px 7px rgba(0,0,0,.1);
+  word-wrap: break-word;
+  word-break: break-all;
 }
 .content .subtitle {
   font-size: 14px;
@@ -108,4 +110,16 @@
 
 .card-content {
   margin: 50px 0;
+}
+
+/* Button */
+.load-more-button {
+  width: auto;
+  padding: 10px 25px;
+  border-radius: 5px;
+  background-color: var(--primary-color);
+  color: #fff;
+  font-size: 14px;
+  display: block;
+  margin: 0 auto;
 }

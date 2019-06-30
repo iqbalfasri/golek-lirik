@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useReducer } from "react";
-import { Row } from "antd";
+import { Row, Skeleton } from "antd";
 import axios from "axios";
 import { handleCorsRequest, API_SERVICES } from "../lib";
 
@@ -15,12 +15,14 @@ import ChartTrackService from "../services/chart-track.service";
 const Homepage = () => {
   const [data, setData] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [pageSize, setPageSize] = useState(10);
+  const [loading, setLoading] = useState(false);
+  const [pageSize, setPageSize] = useState(9);
 
   useEffect(() => {
     ChartTrackService(pageSize)
       .then(data => {
         setData(data);
+        setLoading(false)
       })
       .catch(error => {
         setErrorMessage(error);
@@ -29,11 +31,27 @@ const Homepage = () => {
 
   const handleLoadMore = e => {
     e.preventDefault();
-    setPageSize(pageSize + 10);
+    setPageSize(pageSize + 3);
 
     // save to localstorage
     localStorage.setItem("page_size_top_track_ID", pageSize);
   };
+
+  const LoadComponentWithLoading = () => {
+    if (loading) {
+      return <Skeleton active />
+    }
+    return (
+      <React.Fragment>
+        <div className="card-content">
+          <Row gutter={16}>
+            <LyricCard tracks={data} />
+          </Row>
+        </div>
+        <button className="load-more-button" onClick={handleLoadMore}>Load more</button>
+      </React.Fragment>
+    )
+  }
 
   return (
     <div>
@@ -56,12 +74,7 @@ const Homepage = () => {
           <div>
             <h3>Lagu terpopuler indonesia</h3>
           </div>
-          <div className="card-content">
-            <Row gutter={16}>
-              <LyricCard tracks={data} />
-            </Row>
-          </div>
-          <button onClick={handleLoadMore}>Load more</button>
+          <LoadComponentWithLoading />
         </div>
         {/* Footer */}
         <div>
