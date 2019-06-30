@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { handleCorsRequest, API_SERVICES } from "../lib";
 
-// const { KEY, GET_DETAIL_TRACK, GET_DETAIL_LYRIC } = API_SERVICES;
-
 import LyricService from "../services/lyric.service";
+
+const { KEY, GET_DETAIL_TRACK } = API_SERVICES;
 
 const Lyricpage = props => {
   const { track_id } = props.match.params;
@@ -15,7 +15,8 @@ const Lyricpage = props => {
   useEffect(() => {
     LyricService(track_id)
       .then(data => {
-        console.log(data);
+        console.log(data, "Data Lyric Service")
+        setLyric(data)
       })
       .catch(error => {
         console.log(error);
