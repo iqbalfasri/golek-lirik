@@ -3,6 +3,15 @@
 @import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
 @import url("https://fonts.googleapis.com/css?family=Heebo:300,400,700&display=swap");
 
+:root {
+  --primary-color: #111114;
+  --secondary-color: #C0BEC4;
+  --grey: #7D7D82;
+  --dark-grey: #58585C;
+  --light-grey: #C0BEC4;
+  --lightest-grey: #E5E5E7;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -37,7 +46,7 @@
 .header-wrapper {
   min-height: 500px;
   box-sizing: border-box;
-  background-color: #FE3A02;
+  background-color: #111114;
 
   display: flex;
   flex-direction: column;
@@ -49,7 +58,7 @@
   font-weight: 700;
 }
 .header-wrapper p {
-  color: #CBC5D7;
+  color: var(--secondary-color);
   line-height: 28px;
   margin: 15px 0;
 }
