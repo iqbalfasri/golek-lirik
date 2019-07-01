@@ -9,7 +9,18 @@ const LyricCard = ({ tracks }) => {
         const { track_id, track_name, artist_name } = track.track;
         return (
           <Col key={track_id} md={8}>
-            <Link className="track-link" to={`/lyric/${track_id}`}>
+            <Link
+              className="track-link"
+              to={{
+                pathname: `/lyric/${track_id}`,
+                state: {
+                  track_detail: {
+                    artist_name: artist_name,
+                    track_name: track_name
+                  }
+                }
+              }}
+            >
               <Card className="box-content">
                 <Card.Meta
                   title={<h5 style={{ fontWeight: "bold" }}>{track_name}</h5>}

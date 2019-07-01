@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useReducer } from "react";
-import { Row, Skeleton } from "antd";
-import axios from "axios";
-import { handleCorsRequest, API_SERVICES } from "../lib";
+import React, { useState, useEffect } from "react";
+import { Row, Skeleton, Col } from "antd";
+import { Helmet } from "react-helmet";
 
 // Import Component
 import LyricCard from "../components/lyric-card";
@@ -14,18 +13,20 @@ import ChartTrackService from "../services/chart-track.service";
 
 const Homepage = () => {
   const [data, setData] = useState([]);
+  const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [pageSize, setPageSize] = useState(9);
 
   useEffect(() => {
     ChartTrackService(pageSize)
       .then(data => {
         setData(data);
-        setLoading(false)
+        setLoading(false);
       })
       .catch(error => {
-        setErrorMessage(error);
+        setError(true);
+        setErrorMessage("Oops ada kesalahan!");
       });
   }, [pageSize]);
 
@@ -39,22 +40,46 @@ const Homepage = () => {
 
   const LoadComponentWithLoading = () => {
     if (loading) {
-      return <Skeleton active />
-    }
-    return (
-      <React.Fragment>
-        <div className="card-content">
-          <Row gutter={16}>
-            <LyricCard tracks={data} />
-          </Row>
+      return (
+        <Row gutter={16}>
+          <Col md={8}>
+            <Skeleton active />
+          </Col>
+          <Col md={8}>
+            <Skeleton active />
+          </Col>
+          <Col md={8}>
+            <Skeleton active />
+          </Col>
+        </Row>
+      );
+    } else if (error) {
+      return (
+        <div>
+          <h1>{errorMessage}</h1>
         </div>
-        <button className="load-more-button" onClick={handleLoadMore}>Load more</button>
-      </React.Fragment>
-    )
-  }
+      );
+    } else {
+      return (
+        <React.Fragment>
+          <div className="card-content">
+            <Row gutter={16}>
+              <LyricCard tracks={data} />
+            </Row>
+          </div>
+          <button className="load-more-button" onClick={handleLoadMore}>
+            Load more
+          </button>
+        </React.Fragment>
+      );
+    }
+  };
 
   return (
     <div>
+      <Helmet>
+        <title>Golek Lirik - Home</title>
+      </Helmet>
       <header className="header-wrapper">
         <div className="container">
           <div className="col-md-8">

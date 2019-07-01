@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { handleCorsRequest, API_SERVICES } from "../lib";
+import SetHead from "../components/head";
 
 import LyricService from "../services/lyric.service";
 
@@ -10,13 +11,13 @@ const Lyricpage = props => {
   const { track_id } = props.match.params;
   const [lyric, setLyric] = useState("");
   const [trackName, setTrackName] = useState("");
+  const [artistName, setArtistName] = useState("");
   const [trackNotFound, setTrackNotFound] = useState(false);
 
   useEffect(() => {
     LyricService(track_id)
       .then(data => {
-        console.log(data, "Data Lyric Service")
-        setLyric(data)
+        setLyric(data);
       })
       .catch(error => {
         console.log(error);
@@ -27,8 +28,9 @@ const Lyricpage = props => {
 
       try {
         const result = await axios(URL_API);
-        const { track_name } = result.data.message.body.track;
+        const { track_name, artist_name } = result.data.message.body.track;
         setTrackName(track_name);
+        setArtistName(artist_name);
       } catch (error) {
         setTrackNotFound(true);
       }
@@ -40,6 +42,7 @@ const Lyricpage = props => {
 
   return (
     <React.Fragment>
+      <SetHead title={`${trackName} - ${artistName}`} />
       {trackNotFound && <h1>TRACK TIDAK DITEMUKAN</h1>}
       <div className="container">
         <h1>{trackName}</h1>
