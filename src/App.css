@@ -105,6 +105,10 @@
   word-wrap: break-word;
   word-break: break-all;
   border: 0.2px solid var(--grey);
+  height: 125px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 .content .subtitle {
   font-size: 14px;
