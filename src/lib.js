@@ -32,7 +32,7 @@ const API_SERVICES = {
  * Easy response
  * with loading and React Hooks
  */
-const useFetch = url => {
+const useFetch = (url, pageSize) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -40,13 +40,13 @@ const useFetch = url => {
     const response = await axios(url);
     const { data } = response;
 
-    setData(data);
+    setData(data.message.body);
     setLoading(false);
   };
 
   useEffect(() => {
     fetchUrl();
-  }, []);
+  }, [pageSize]);
 
   return [data, loading];
 };

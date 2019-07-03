@@ -1,15 +1,15 @@
-@import '~antd/dist/antd.css';
+@import "~antd/dist/antd.css";
 
 @import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
 @import url("https://fonts.googleapis.com/css?family=Heebo:300,400,700&display=swap");
 
 :root {
   --primary-color: #111114;
-  --secondary-color: #C0BEC4;
-  --grey: #7D7D82;
-  --dark-grey: #58585C;
-  --light-grey: #C0BEC4;
-  --lightest-grey: #E5E5E7;
+  --secondary-color: #c0bec4;
+  --grey: #7d7d82;
+  --dark-grey: #58585c;
+  --light-grey: #c0bec4;
+  --lightest-grey: #e5e5e7;
 }
 
 * {
@@ -46,7 +46,7 @@
 .header-wrapper {
   min-height: 500px;
   box-sizing: border-box;
-  background-color: #EAE5E6;
+  background-color: #eae5e6;
   background: linear-gradient(to right, rgb(242, 112, 156), rgb(255, 148, 114));
 
   display: flex;
@@ -83,28 +83,30 @@
 * Content style
 */
 .content {
-  margin: 50px 0;
+  margin: 75px 0;
 }
 .content h3 {
-  font-size: 28px;
+  color: var(--primary-color);
+  font-size: 32px;
   font-weight: 700;
 }
 .content .track-link {
   text-decoration: none;
 }
-.content .track-link:hover .box-content{
+.content .track-link:hover .box-content {
   transform: translateY(-3px);
-  box-shadow: 0 2px 17px rgba(0,0,0,.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 .content .box-content {
-  border-radius: 3px;
+  border-radius: 15px;
   background-color: white;
   margin-bottom: 50px;
   box-sizing: border-box;
-  box-shadow: 0 2px 7px rgba(0,0,0,.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   word-wrap: break-word;
   word-break: break-all;
-  border: 0.2px solid var(--grey);
+  /* border: 0.2px solid var(--grey); */
+  border: none;
   height: 125px;
   display: flex;
   flex-direction: column;
@@ -116,7 +118,7 @@
 }
 
 .card-content {
-  margin: 50px 0;
+  margin: 30px 0;
 }
 
 /* Button */
@@ -124,10 +126,15 @@
   width: auto;
   padding: 10px 25px;
   border-radius: 5px;
-  background-color: rgba(95,209,249,1);
+  background-color: rgb(247, 128, 137);
+  border: none;
+  outline: none;
   color: #ffffff;
   font-size: 14px;
   display: block;
   margin: 0 auto;
   font-weight: 700;
+}
+.load-more-button:hover {
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.1);
 }

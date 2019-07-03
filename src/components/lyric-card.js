@@ -23,7 +23,7 @@ const LyricCard = ({ tracks }) => {
             >
               <Card className="box-content">
                 <Card.Meta
-                  title={<h5 style={{ fontWeight: "bold" }}>{track_name}</h5>}
+                  title={<h5 style={{ fontWeight: "bold", color: "#111114" }}>{track_name}</h5>}
                   description={artist_name}
                 />
               </Card>

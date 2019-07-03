@@ -5,30 +5,27 @@ import { Helmet } from "react-helmet";
 // Import Component
 import LyricCard from "../components/lyric-card";
 
-// instance API_SERVICES
-// const { GET_CHART_TRACK, KEY } = API_SERVICES;
+import { API_SERVICES, useFetch, handleCorsRequest } from "../lib";
 
-//
-import ChartTrackService from "../services/chart-track.service";
+// instance API_SERVICES
+const { GET_CHART_TRACK, KEY } = API_SERVICES;
+
+// //
+// import ChartTrackService from "../services/chart-track.service";
 
 const Homepage = () => {
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [pageSize, setPageSize] = useState(9);
 
-  useEffect(() => {
-    ChartTrackService(pageSize)
-      .then(data => {
-        setData(data);
-        setLoading(false);
-      })
-      .catch(error => {
-        setError(true);
-        setErrorMessage("Oops ada kesalahan!");
-      });
-  }, [pageSize]);
+  const [data, loading] = useFetch(
+    handleCorsRequest(GET_CHART_TRACK(pageSize, KEY)),
+    pageSize
+  );
+
+  const { track_list } = data;
 
   const handleLoadMore = e => {
     e.preventDefault();
@@ -68,7 +65,7 @@ const Homepage = () => {
             </Row>
           </div>
           <button className="load-more-button" onClick={handleLoadMore}>
-            Load more
+            Lihat lebih banyak
           </button>
         </React.Fragment>
       );
@@ -99,7 +96,20 @@ const Homepage = () => {
           <div>
             <h3>Lagu terpopuler indonesia</h3>
           </div>
-          <LoadComponentWithLoading />
+          {track_list === undefined || track_list.length === 0 ? (
+            <p>Loading</p>
+          ) : (
+            <React.Fragment>
+              <div className="card-content">
+                <Row gutter={16}>
+                  <LyricCard tracks={track_list} />
+                </Row>
+              </div>
+              <button className="load-more-button" onClick={handleLoadMore}>
+                Lihat lebih banyak
+              </button>
+            </React.Fragment>
+          )}
         </div>
         {/* Footer */}
         <div>
